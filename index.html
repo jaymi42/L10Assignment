@@ -294,14 +294,12 @@
     <script>
         $(document).ready(function () {
             new fullpage('#fullpage', {
-                navigation: true,
-                navigationPosition: 'right',
-                afterLoad: function (origin, destination, direction) {
-                    if (destination.index == 1) {
-                        s2Animation.play();
-                    }
-                },
-            });
+            afterLoad: function (origin, destination, direction) {
+                if (destination.index == 1) {
+                    s2Animation.play();
+                }
+            },
+        });
 
             const labelColor = {
                 plugins: {
