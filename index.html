@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 in Singapore</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-container {
+            background-color: black;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .header-container ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .header-container ul li {
+            margin-left: 10px;
+        }
+
+        .content-container {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .content-container .col-md-6 {
+            width: 48%;
+            margin-right: 2%;
+            box-sizing: border-box;
+
+        }
+
+        #cases-chart {
+            width: 100%;
+        }
+
+        .centres-spot {
+            width: 30px;
+            height: 30px;
+            background-color: yellow;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #map-container {
+            position: relative;
+        }
+
+        .centres-spot {
+            width: 20px;
+            height: 20px;
+            background-color: lightblue;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+        }
+
+
+        .centres-spot.btn1 {
+            top: 15rem;
+            left: 31rem;
+        }
+
+        .centres-spot.btn2 {
+            top: 10rem;
+            left: 27rem;
+        }
+
+        .centres-spot.btn3 {
+            top: 9rem;
+            left: 9rem;
+        }
+
+        .centres-spot.btn4 {
+            top: 11rem;
+            left: 14rem;
+        }
+
+        .centres-spot.btn5 {
+            top: 16rem;
+            left: 18rem;
+        }
+
+        .centres-spot.btn6 {
+            top: 20rem;
+            left: 28rem;
+        }
+
+        .centres-spot.btn7 {
+            top: 19rem;
+            left: 22rem;
+        }
+
+        .centres-spot.btn8 {
+            top: 12rem;
+            left: 16rem;
+        }
+
+        .centres-spot.btn9 {
+            top: 18rem;
+            left: 30rem;
+        }
+
+        .centres-spot.btn10 {
+            top: 22rem;
+            left: 24rem;
+        }
+
+        .centres-spot.btn11 {
+            top: 11rem;
+            left: 33rem;
+        }
+
+        .centres-spot.btn12 {
+            top: 15rem;
+            left: 7rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="fullpage">
+        <div class="section" id="section1">
+            <div class="header-container">
+                <div style="display: flex; align-items: center;">
+                    <img src="images/virus.svg" alt="COVID" style="fill: white;">
+                    <h1 style="margin: 0; color: white;">Covid-19 in
+                        Singapore</h1>
+                </div>
+                <nav class="navbar navbar-expand-lg">
+                    <ul>
+                        <li><a href="#section1" style="text-decoration: none; color: white;">Cases</a></li>
+                        <li><a href="#section2" style="text-decoration: none; color: white;">Vaccination
+                                Progress</a></li>
+                        <li><a href="#section3" style="text-decoration: none; color: white;">Vaccination
+                                Centres</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="content-container">
+                <div class="col-md-6">
+                    <h2><b>Cases</b></h2>
+                    <br>
+                    <h6>Total cases: <strong>257510</strong></h6>
+                    <h6>Currently in hospital: <strong>1365</strong></h6>
+                    <h6>Total deaths: <strong>678</strong></h6>
+                    <br>
+                    <p>
+                        The number of Covid-19 cases in Singapore has grown
+                        to 257510, with 2079 new cases reported on 31 Dec.
+                        <br><br>
+                        Of these, 2030 were reported in the community and 40
+                        in the workers’ dormitories. The remaining nine
+                        cases were imported. <br><br>
+                        A further 2275 patients were discharged, including
+                        366 seniors aged above 60. A total of 238909 cases
+                        have recovered to date.
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="cases-chart" width="800" height="600"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="section2">
+            <br><br>
+            <div class="content-container row">
+                <div class="col-md-6">
+                    <h2>9 out of 10 Singaporeans</h2>
+                    <h3>have been vaccinated</h3>
+                    <br><br>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="images/human_black.svg" alt="Human Black" class="human-img">
+                        </div>
+                        <div class="col-md-2">
+                            <img src="images/human_black.svg" alt="Human Black" class="human-img">
+                        </div>
+                        <div class="col-md-2">
+                            <img src="images/human_black.svg" alt="Human Black" class="human-img">
+                        </div>
+                        <div class="col-md-2">
+                            <img src="images/human_black.svg" alt="Human Black" class="human-img">
+                        </div>
+                        <div class="col-md-2">
+                            <img src="images/human_black.svg" alt="Human Black" class="human-img">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="images/human_black.svg" alt="Human Black" class="human-img">
+                        </div>
+                        <div class="col-md-2">
+                            <img src="images/human_black.svg" alt="Human Black" class="human-img">
+                        </div>
+                        <div class="col-md-2">
+                            <img src="images/human_black.svg" alt="Human Black" class="human-img">
+                        </div>
+                        <div class="col-md-2">
+                            <img src="images/human_black.svg" alt="Human Black" class="human-img">
+                        </div>
+                        <div class="col-md-2">
+                            <img src="images/human_grey.svg" alt="Human Grey" class="human-img">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h2>Vaccination Progress</h2>
+                    <br><br>
+                    <p>For every 100 people in Singapore, 88 have received
+                        their first dose and 87 are fully vaccinated as at
+                        14 Dec.
+                        <br><br>
+                        In addition, the Health Ministry reported that as at
+                        14 Dec, 96 percent of the eligible population (aged
+                        12 years and above) have completed their full
+                        regime, or received two doses of Covid-19 vaccines.
+                        <br><br>
+                        With new Covid-19 variants such as Omicron
+                        surfacing, full vaccination will have to include
+                        booster shots as well.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="section3">
+            <div class="content-container row">
+                <div class="col-md-12">
+                    <h2 class="text-center">Vaccination Centres</h2>
+                    <h3 class="text-center">There are currently 12
+                        vaccination centres in operation</h3>
+                </div>
+            </div>
+            <div class="content-container row">
+                <div class="col-md-6">
+                    <div id="map-container" style="position: relative;">
+                        <img src="images/singapore.svg" alt="Map of Singapore">
+                        <button class="centres-spot btn1" id="BP" data-tooltip="Bedok Polyclinic"></button>
+                        <button class="centres-spot btn2" id="HP" data-tooltip="Hougang Polyclinic"></button>
+                        <button class="centres-spot btn3" id="JP" data-tooltip="Jurong Polyclinic"></button>
+                        <button class="centres-spot btn4" id="BBP" data-tooltip="Bukit Batok Polyclinic"></button>
+                        <button class="centres-spot btn5" id="CMP" data-tooltip="Clementi Polyclinic"></button>
+                        <button class="centres-spot btn6" id="MP" data-tooltip="Marine Parade Polyclinic"></button>
+                        <button class="centres-spot btn7" id="BMP" data-tooltip="Bukit Merah Polyclinic"></button>
+                        <button class="centres-spot btn8" id="CCK" data-tooltip="Choa Chu Kang Polyclinic"></button>
+                        <button class="centres-spot btn9" id="GP" data-tooltip="Geylang Polyclinic"></button>
+                        <button class="centres-spot btn10" id="OP" data-tooltip="Outram Polyclinic"></button>
+                        <button class="centres-spot btn11" id="PRP" data-tooltip="Pasir Ris Polyclinic"></button>
+                        <button class="centres-spot btn12" id="PP" data-tooltip="Pioneer Polyclinic"></button>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <table id="vaccination-table" class="display" width="100%"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullpage.js@3.1.2/dist/fullpage.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tippy.js@6.3.2/dist/tippy-bundle.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tippy.js@6.3.2/dist/tippy.css">
+    
+    <script>
+        $(document).ready(function () {
+            new fullpage('#fullpage', {
+                navigation: true,
+                navigationPosition: 'right',
+                afterLoad: function (origin, destination, direction) {
+                    if (destination.index == 1) {
+                        s2Animation.play();
+                    }
+                },
+            });
+
+            const labelColor = {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: "#ccc",
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            color: "#ccc",
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: "#ccc",
+                        }
+                    },
+                }
+            };
+
+            const chartData = {
+                labels: ['December 1', 'December 2', 'December 3', 'December 4', 'December 5', 'December 6', 'December 7', 'December 8', 'December 9', 'December 10', 'December 11', 'December 12', 'December 13', 'December 14'],
+                datasets: [{
+                    label: 'Daily Cases (past 2 weeks)',
+                    data: [1134, 1056, 986, 771, 756, 721, 654, 742, 689, 512, 455, 376, 244, 103],
+                    backgroundColor: '#00FF59',
+                    borderColor: '#00FF59',
+                    borderWidth: 1
+                }]
+            };
+
+            const config = {
+                type: 'bar',
+                data: chartData,
+                options: labelColor,
+            };
+
+            var ctx = document.getElementById('cases-chart').getContext('2d');
+            var casesChart = new Chart(ctx, config);
+
+            var dataSet = [
+                ['Bedok Polyclinic', '11 Bedok North Street 1 Heartbeat@Bedok #02-01, #03-01, Singapore 469662', 'Pfizer', '6343 1121'],
+                ['Bukit Batok Polyclinic', '50 Bukit Batok West Avenue 3, Singapore 659164', 'Moderna', '6343 1122'],
+                ['Bukit Merah Polyclinic', '162 Bukit Merah Central Level 4, Singapore 150163', 'Pfizer', '6343 1123'],
+                ['Choa Chu Kang Polyclinic', '2 Teck Whye Crescent, Singapore 688846', 'Moderna', '6343 1124'],
+                ['Clementi Polyclinic', '451 Clementi Avenue 3, Singapore 120451', 'Pfizer', '6343 1125'],
+                ['Geylang Polyclinic', '21 Geylang East Central, Singapore 389707', 'Pfizer', '6343 1126'],
+                ['Hougang Polyclinic', '89 Hougang Avenue 4, Singapore 538829', 'Pfizer', '6765 1121'],
+                ['Jurong Polyclinic', '190 Jurong East Avenue 1, Singapore 609788', 'Pfizer', '6765 1122'],
+                ['Marine Parade Polyclinic', '80 Marine Parade Central, Singapore 440080', 'Pfizer', '6765 1123'],
+                ['Outram Polyclinic', '3 Second Hospital Avenue, #02-00 Health Promotion Board Building, Singapore 168937', 'Comirnaty', '6765 1124'],
+                ['Pasir Ris Polyclinic', '1 Pasir Ris Drive 4, Singapore 519457', 'Comirnaty', '6765 1125'],
+                ['Pioneer Polyclinic', '26 Jurong West Street 61, Singapore 648201', 'Moderna', '6765 1126']
+            ];
+
+            $('#vaccination-table').DataTable({
+                data: dataSet,
+                paging: true,
+                pageLength: 6,
+                columns: [
+                    { title: 'Name' },
+                    { title: 'Address' },
+                    { title: 'Vaccine Type' },
+                    { title: 'Phone' }
+                ]
+            });
+
+            const s2Animation = anime.timeline({
+                easing: 'easeOutExpo',
+                duration: 900,
+                delay: anime.stagger(100),
+            });
+
+            const humanImages = document.querySelectorAll('.human-img');
+
+            s2Animation.add({
+                targets: humanImages,
+                opacity: 1,
+                translateX: [80, 0],
+                easing: 'easeInOutQuad',
+            });
+
+            tippy('.centres-spot', {
+                content: (reference) => reference.getAttribute('data-tooltip'),
+                interactive: true,
+            });
+        });
+
+    </script>
+</body>
+
+</html>
